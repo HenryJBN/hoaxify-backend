@@ -48,13 +48,7 @@ public class UserControllerTest {
 		userRepository.deleteAll();
 	}
 	
-	private User createValidUser() {
-		User user = new User();
-		 user.setUsername("test-user");
-		 user.setDisplayName("test-display");
-		 user.setPassword("P4ssword");
-		return user;
-	}
+	
 	
 	
 	
@@ -182,7 +176,32 @@ public class UserControllerTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 	}
 	
+	@Test
+	public void postUser_whenUserHasPasswordWithAllUppowercase_receivedBadRequest() {
+		User user = createValidUser();
+		
+		user.setPassword("ALLUPPERCASE");
+		ResponseEntity<Object> response = postSignup(user, Object.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
 	
+	@Test
+	public void postUser_whenUserHasPasswordWithAllNumber_receivedBadRequest() {
+		User user = createValidUser();
+		
+		user.setPassword("123456789");
+		ResponseEntity<Object> response = postSignup(user, Object.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	private User createValidUser() {
+		User user = new User();
+		 user.setUsername("test-user");
+		 user.setDisplayName("test-display");
+		 user.setPassword("P4ssword"); 
+		return user;
+	}
 	
 	public <T> ResponseEntity<T> postSignup(Object request, Class<T> response ){
 		return testRestTemplate.postForEntity(API_1_0_USERS, request, response);
