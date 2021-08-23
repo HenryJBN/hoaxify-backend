@@ -36,6 +36,7 @@ import com.hoaxify.hoaxify.user.UserRepository;
 public class UserControllerTest {
 	
 	private static final String API_1_0_USERS = "/api/1.0/users";
+	
 	@Autowired
 	TestRestTemplate testRestTemplate;
 	
